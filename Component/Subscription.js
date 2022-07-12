@@ -70,7 +70,9 @@ const Subscription = (props) => {
                     <th scope="col">Description</th>
                     <th scope="col">Annual Cost</th>
                     <th scope="col">Monthly Cost</th>
-                    <th scope="col" colSpan={2}>Active</th>
+                    <th scope="col">Active</th>
+                    <th scope="col"></th>
+
                   </tr>
                 </thead>
 
@@ -91,7 +93,7 @@ const Subscription = (props) => {
   <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
 </div>
                           </td>
-                          <td>
+                          <td style={{textAlign:"right"}}> 
                             <Link href ={{pathname:"/updatesubscription",query:{id: item.id, name:item.subscriptionName, description:item.description,monthly:item.monthlyCost,annualCost:item.annualCost,status:item.active} }}>
                           <button id="add-btn"  className="btn btn-outline-success btn-round border-btn" style={{marginRight:"0px",  border:"none", width:"100px", marginTop:"0"}} type="submit">Edit</button>
                           </Link>
