@@ -2,9 +2,12 @@ import React, { useRef, useState, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
 
 import axios from "axios";
+import Link from "next/link";
+import {useRouter} from "next/router";
 
-const Users = () => {
+const Users = (props) => {
   const [usersData, setUsersData] = useState(null);
+  const router = useRouter();
 
   async function Users() {
     try {
@@ -16,8 +19,9 @@ const Users = () => {
       setUsersData(response.data);
     } catch (err) {
       console.log(err, err);
-    }
+    } 
   }
+
 
   useEffect(() => {
     Users();
@@ -59,6 +63,7 @@ const Users = () => {
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
+                    <th scope="col">DETAIL</th>
                   </tr>
                 </thead>
 
@@ -73,10 +78,15 @@ const Users = () => {
                           <td>{item.firstName}</td>
                           <td>{item.lastName}</td>
                           <td>{item.email}</td>
+                          <td>
+                            <Link href = {"/userdetails/" + item.id}>
+                          <button  className="btn btn-outline-success btn-round border-btn" style={{marginRight:"0px",  border:"none", width:"100px"}} type="submit">Details</button>
+                          </Link>
+                          </td>
                         </tr>
                       );
                     })
-                  ) : (
+                  )   : (
                     <tr>
                       <td>
                         <Spinner animation="border" variant="warning" />

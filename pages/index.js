@@ -1,6 +1,7 @@
 import React from 'react'
 import Admin from '../Component/Admin'
 
+
 const admin = () => {
   return (
     <div>
@@ -9,4 +10,5 @@ const admin = () => {
   )
 }
 
-export default admin
+export default admin;
+

@@ -3,45 +3,35 @@ import Heart from "../public/Heart.svg";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { signIn } from "next-auth/react";
+import { Router, useRouter } from "next/router";
 
 const Admin = () => {
-  // const [valid, setValid] = useState(false);
+  const router = useRouter();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  async function Admin(dat) {
-    try {
-      let res = await axios.post("/api/admin", dat);
-      const response = res.data;
-      console.log(response.data);
-      // setValid(false);
-      localStorage.setItem("token", response.data.data);
-      console.log(response.data.data);
-      notify("signed in Successfully");
-      setTimeout(() => {
-        window.location.href = "/dashboard";
-      }, 500);
-    } catch (err) {
-      console.log(err, err);
-      // setValid(true);
-      notifyError("User Not Found");
-    }
-  }
 
-  function formSubmitHandler(event) {
+  async function formSubmitHandler(event) {
     event.preventDefault();
+   
     const email = emailInputRef.current.value;
     const password = passwordInputRef.current.value;
 
-    if (!email || email.trim() === "" || !email.includes("@") || !password) {
-      setValid(true);
-      return;
-    }
-    const data = {
+    const res = await signIn("credentials", {
+      redirect: false,
       email,
-      password,
-    };
-    Admin(data);
-  
+      password
+    })
+    console.log (res, 'response from credentials')
+
+    if(res?.error) {
+      console.log(res.error)
+    }
+    else {
+    }
+    if(!res.error) {
+      router.push ('/dashboard')
+    }
   }
 
   const notify = (msg) =>
@@ -87,7 +77,7 @@ const Admin = () => {
               <img src={Heart.src} className="mt-2" />
               <h3 className="heading-text mt-3"> ADMIN</h3>
 
-              <div className="input-item">
+              <div className="input-item" style={{flexDirection:"column"}}>
                 <h6 className="item-text">EMAIL</h6>
                 <input
                   className="textinput"
@@ -98,7 +88,7 @@ const Admin = () => {
                 />
               </div>
 
-              <div className="input-item" style={{ marginTop: "25px" }}>
+              <div className="input-item" style={{ marginTop: "25px", flexDirection:"column" }}>
                 <h6 className="item-text">PASSWORD</h6>
                 <input
                   className="textinput"
@@ -107,10 +97,7 @@ const Admin = () => {
                   name="last-name"
                   ref={passwordInputRef}
                 />
-                {/* {valid && <p style={{ color: "red" }}> Invalid details. </p>} */}
               </div>
-
-              {/* <Link href={"/creditPage"}> */}
               <button
                 className="btn btn-round btn-warning w-100 "
                 style={{ marginTop: "73p" }}
@@ -118,15 +105,7 @@ const Admin = () => {
               >
                 LOGIN
               </button>
-              {/* </Link> */}
-              {/* <p className="by-text"> By continuing you agree to our cookie policy.</p> */}
-
-              {/* <div className="para-set">
-                <Link href={'/'}>
-                <p className="iptpara-text">Are you new here? <a href="home-page.html" style={{fontWeight: "bold", fontSize: "15px", color: "#D32286"}}>Sign Up</a></p>
-              </Link>
-
-              </div> */}
+             
             </form>
           </div>
         </div>
@@ -136,3 +115,11 @@ const Admin = () => {
 };
 
 export default Admin;
+
+// export async function getServerSideProps(context) {
+//   return {
+//     props:{
+//       csrfToken: await getCsrfToken(context)
+//     },
+//   };
+// }

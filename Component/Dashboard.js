@@ -95,7 +95,7 @@ const Dashboard = () => {
                     <div className="right-text">Aproved<br/>{totalStats?.usdtApprovedAmount}</div>
                     </div>
                   </div>
-                  <div className="dashboard-item mt-5"  style={{ cursor: "pointer" }} id="second-btn" mt-3>
+                  <div className="dashboard-item mt-5"  style={{ cursor: "pointer" }} id="second-btn">
                     <div className="btc-text pt-3">
                     CREDIT CARD
                     </div>
@@ -104,6 +104,13 @@ const Dashboard = () => {
                     <div className="right-text">Aproved<br/>{totalStats?.ccApprovedAmount}</div>
                     </div>
                   </div>
+                  <Link href={"/subscription"}>
+                  <div className="dashboard-item mt-5"  style={{ cursor: "pointer" }}>{}
+                  <div className="btc-text pt-3">
+                  Subscription
+                    </div>
+                  </div>
+                </Link>
                
         
                 {/* <div className='link-item'    id='second-item'>CHANGE PASSWORD</div>

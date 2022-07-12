@@ -35,10 +35,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/dashboard.js"
     ],
-    "/stakings": [
+    "/subscription": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/stakings.js"
+      "static/chunks/pages/subscription.js"
+    ],
+    "/updatesubscription": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/updatesubscription.js"
     ]
   },
   "ampFirstPages": []

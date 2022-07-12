@@ -1,23 +1,42 @@
-import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
+import axios from "axios";
+import NextAuth from "next-auth";
+import CredentialsProviders from "next-auth/providers/credentials";
 
 export default NextAuth({
-  // Configure one or more authentication providers
+  session: {
+    strategy: "jwt",
+    maxAge: 500,
+  },
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
-    // ...add more providers here
-  ],
+    CredentialsProviders({
+      name: "Custom Provider",
+      async authorize(credentials) {
+        let { email, password } = credentials;
+        console.log(credentials)
+        let data = { email: email, password: password };
+        console.log(data, "form email and password");
+        let response = await axios.post(
+          "http://13.215.196.173:3000/api/v1/auth/signin",
+          data
+        );
+        let user = response.data;
+        let token = response.data.data;
 
+        if (!token) {
+          throw new Error("Invalid token");
 
-
-
-  collbacks:{
-      jwt:async ({token})=>{},
-      sessionStorage:()=>{
+        }
+        if (!(response.status == 200)) {
+          
+          throw new Error("Invalid Credentials" +email);
+        }
+        if (response.status == 200) {
+          return (user = {
+            name: token,
+            email: email,
+          });
+        }
       },
-      secret:""
-  }
-})
+    }),
+  ],
+});

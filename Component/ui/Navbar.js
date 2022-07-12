@@ -1,50 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import Logo from '../../public/logo.svg'
-import { Collapse, Dropdown } from 'react-bootstrap'
+import { Collapse } from 'react-bootstrap'
 import Link from 'next/link';
 import { useRouter} from 'next/router';
-import axios from 'axios';
+import { useSession, signOut } from 'next-auth/react';
+import axios from 'axios'
 
 const Navbar = () => {
-  const router = useRouter();  
+  const {data:session} = useSession();
   const [open,setOpen]= useState(false);
-  const [token,setToken] = useState(null);
   const [name, setName] = useState(null);
 
-  // async function getUserData(tokenPath){
+    // async function getUserData (){
+    //   let data = await axios.post("/api/admin")
+    //   console.log(data.data.data)
+    //   setName(data.data.data)
+    // }
 
-  //   let data=  await  axios.post("api/userProfile",{token:tokenPath})
-  //   console.log(data.data.data)
-  //   setName(data.data.data)
-  // }
-  useEffect (()=>{
-    const tokenPath = localStorage.getItem ('token')
-    console.log (tokenPath)
-    if(tokenPath != undefined){
-      setToken(tokenPath)
-  // getUserData(tokenPath)
-    }
-    // setToken (false)
-    else if( undefined!= tokenPath){
-      setToken(tokenPath)
-    }
-  },[])
-  
-  useEffect(()=>{
-const name = JSON.parse(localStorage.getItem('profile'))
-console.log(name,'my name')
-setName(name);
-  },[])
+    // useEffect (()=>{
+    //   if(session){
+    //     getUserData()
+    //   }
+    // },[])
+
+ 
 
   function logoutHandler () {
-    // window.location.reload();
-    // window.localStorage.clear();
-    window.location.href = "/"
-    
-    window.localStorage.clear();
-    window.localStorage.removeItem("token", "query");
-    // router.push('/login');
-    window.location.reload;
+   signOut();
   }
   
 return (
@@ -62,39 +44,39 @@ return (
     <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{justifyContent:"flex-end"}}>
       <ul className="navbar-nav mb-2 mb-lg-0" style={{marginLeft: "auto !important"}}>
 
-        { token !==null ?   <li className="nav-item">
+        { session ?   <li className="nav-item">
         <Link href={'/dashboard'}>
           <a className="nav-link active" aria-current="page" href="#">DASHBOARD</a>
           </Link>
         </li>:null}
-        { token !==null ?   <li className="nav-item">
+        { session ?   <li className="nav-item">
         <Link href={'/stakings'}>
           <a className="nav-link active" aria-current="page" href="#">STAKINGS</a>
           </Link>
         </li>:null}
-        { token !==null ?   <li className="nav-item">
+        { session ?   <li className="nav-item">
         <Link href={'/users'}>
           <a className="nav-link active" aria-current="page" href="#">USERS</a>
           </Link>
         </li>:null}
-        { token !==null ?   <li className="nav-item">
+        { session ?   <li className="nav-item">
         <Link href={'/buyrequest'}>
           <a className="nav-link active" aria-current="page" href="#">BUY REQUEST</a>
         </Link>
         </li>:null}
-        { token !==null ?   <li className="nav-item">
+        { session ?   <li className="nav-item">
           <a className="nav-link active" aria-current="page" href="#">SETTING</a>
         </li>:null}
-        { token !==null ?   <li className="nav-item">
+        { session ?   <li className="nav-item">
           <a className="nav-link active" aria-current="page" href="#">WELCOME  {name?.firstName} </a>
         </li>:null}
       
-        { token !==null ?  <li className="nav-item">
+        { session ?  <li className="nav-item">
           <Link href={'/'}>
           <button onClick={logoutHandler} className="btn btn-outline-success border-btn" style={{marginRight:"10px"}} type="submit">Logout</button>
           </Link>
         </li>:null}
-            {token == null ?
+            {!session ?
             <li className="nav-item">
               <Link href={'/'}>
           <button  className="btn btn-outline-success border-btn" type="submit">LOGIN / SIGNUP</button>

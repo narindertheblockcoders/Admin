@@ -7,9 +7,9 @@ const BuyRequest = () => {
 
   async function BuyRequest() {
     try {
-      const token = localStorage.getItem("token");
-      console.log(token, "for api");
-      let res = await axios.post("/api/buyrequest", { token: token });
+      // const token = localStorage.getItem("token");
+      // console.log(token, "for api");
+      let res = await axios.post("/api/buyrequest");
       const response = res.data;
       console.log(response.data, "for fetching details");
       setUsersBuyRequest(response.data);

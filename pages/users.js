@@ -1,6 +1,6 @@
 import React from 'react'
-import Admin from '../Component/Admin'
 import Users from '../Component/Users'
+import { getSession } from 'next-auth/react'
 
 const admin = () => {
   return (
@@ -11,3 +11,20 @@ const admin = () => {
 }
 
 export default admin
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context)
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      }
+    }
+  }
+  return {
+    props:{
+      session
+    }
+  }
+}
