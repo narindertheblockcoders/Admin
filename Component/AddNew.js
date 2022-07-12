@@ -156,8 +156,8 @@ const AddNew = () => {
                 <h6 className="item-text">ACTIVE</h6>
                 <select className="textinput" ref={activeInputRef}>
                   {/* <option placeholder="Select"></option> */}
-                  <option>True</option>
-                  <option>False</option>
+                  <option value="1">True</option>
+                  <option value="0">False</option>
                 </select>
               </div>
               <button

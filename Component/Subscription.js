@@ -88,9 +88,9 @@ const Subscription = (props) => {
                           <td>{item.description}</td>
                           <td>{item.annualCost}</td>
                           <td>{item.monthlyCost}</td>
-                          <td>{item.active} 
+                          <td> 
                           <div className="form-check">
-  <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+  <input checked={item.active} className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
 </div>
                           </td>
                           <td style={{textAlign:"right"}}> 
